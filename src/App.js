@@ -26,6 +26,10 @@ class BooksApp extends React.Component {
     })
   }
 
+  componentWillReceiveProps() {
+    this.fetchAll()
+  }
+
   componentDidMount() {
     this.fetchAll()
   }

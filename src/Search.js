@@ -9,16 +9,33 @@ class Search extends Component {
 	  super(props)
 
 	  this.state = {
-	    books: []
+	    books: [],
+	    booksOnShelves: []
 	  }
+	}
+
+	fetchAll(books) {
+	  BooksAPI.getAll().then((data) => {
+	    this.setState({
+	      booksOnShelves: data,
+	      books
+	    })
+	    const booksOnShelves = this.state.booksOnShelves
+	    const ids = booksOnShelves.map((x) => x.id)
+	    books.forEach((x, indx) => {
+	    	if ( ids.indexOf(x.id) !== -1 ) {
+	    		books[indx] = booksOnShelves[ids.indexOf(x.id)]
+	    	}
+	    })
+	    this.setState({books})
+	  })
 	}
 
 	searchTitleAuthor = (event) => {
 		if(event.key === 'Enter'){
 			BooksAPI.search(event.target.value).then((books) => {
-
 		   		if ( !books.error ) {
-		   			this.setState({books})
+		   			this.fetchAll(books)
 		   		}
 		   		else {
 		   			this.setState({books: []})

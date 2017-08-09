@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import StarRatingComponent from 'react-star-rating-component'
-import * as BooksAPI from './BooksAPI'
 
 class Book extends Component {
 	onStarClick(nextValue, prevValue, name) {
