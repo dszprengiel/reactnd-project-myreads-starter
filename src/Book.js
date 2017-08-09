@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
+import StarRatingComponent from 'react-star-rating-component'
+import * as BooksAPI from './BooksAPI'
 
 class Book extends Component {
+	onStarClick(nextValue, prevValue, name) {
+		console.log(nextValue)
+	}
+
 	render() {
-		const { shelf, title,  authors, imageLinks, id } = this.props.data
+		const { shelf, title,  authors, imageLinks, id, averageRating, ratingsCount } = this.props.data
 		const bookCover = {
 			width: 128,
 			height: 193,
@@ -24,6 +30,19 @@ class Book extends Component {
 			  </div>
 			  <div className="book-title">{title}</div>
 			  <div className="book-authors">{authors ? authors.join(', ') : ''}</div>
+			  <StarRatingComponent
+			              name="bookRating"
+			              editing={false}
+			              starColor="#60ac5d"
+			              emptyStarColor="#60ac5d"
+			              value={averageRating}
+			              onStarClick={this.onStarClick}
+			              renderStarIcon={(index, value) => {
+			                return <span className={index <= value ? 'fa fa-star' : 'fa fa-star-o'} />;
+			              }}
+			              renderStarIconHalf={() => <span className="fa fa-star-half-full"/>}
+			            />
+			            <span className="ratingsCount">({ratingsCount ? ratingsCount : 0})</span>
 			</div>
 		)
 	}

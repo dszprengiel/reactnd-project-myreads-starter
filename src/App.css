@@ -138,6 +138,11 @@ body, .app {
   height: 200px;
   display: flex;
   align-items: flex-end;
+  border-bottom: 10px solid transparent;
+  padding-bottom: 8px;
+  -webkit-border-image: url(http://i.stack.imgur.com/bZ8Lk.png) 15 stretch;
+  -o-border-image: url(http://i.stack.imgur.com/bZ8Lk.png) 15 stretch;
+  border-image: url(http://i.stack.imgur.com/bZ8Lk.png) 15 stretch;
 }
 
 .book-shelf-changer {
@@ -171,4 +176,17 @@ body, .app {
   padding: 20px 10px 0;
   text-align: center;
   font-size: 0.8em;
+}
+
+/* ratings */
+.dv-star-rating {
+  float:  left;
+}
+.ratingsCount {
+  font-size:  12px;
+  display: inline-block;
+  position: relative;
+  margin-left:  5px;
+  margin-top : 3px;
+  float:  left;
 }
