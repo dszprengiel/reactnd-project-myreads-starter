@@ -8,15 +8,11 @@ class Book extends Component {
 
 	render() {
 		const { shelf, title,  authors, imageLinks, id, averageRating, ratingsCount } = this.props.data
-		const bookCover = {
-			width: 128,
-			height: 193,
-			backgroundImage: 'url(' + imageLinks.thumbnail + ')'
-		}
+		const bookCoverBg= { backgroundImage: 'url(' + (imageLinks ? imageLinks.thumbnail : '') + ')'}
 		return (
 			<div className="book">
 			  <div className="book-top">
-			    <div className="book-cover" style={bookCover}></div>
+			    <div className="book-cover" style={bookCoverBg}></div>
 			    <div className="book-shelf-changer">
 			      <select value={shelf ? shelf : 'none'} onChange={(event) => this.props.onShelfChange(id, event.target.value)}>
 			        <option value="none" disabled>Move to...</option>

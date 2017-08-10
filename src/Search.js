@@ -10,7 +10,8 @@ class Search extends Component {
 
 	  this.state = {
 	    books: [],
-	    booksOnShelves: []
+	    booksOnShelves: [],
+	    noResultsMsg: ''
 	  }
 	}
 
@@ -32,16 +33,22 @@ class Search extends Component {
 	}
 
 	searchTitleAuthor = (event) => {
-		if(event.key === 'Enter'){
-			BooksAPI.search(event.target.value).then((books) => {
-		   		if ( !books.error ) {
-		   			this.fetchAll(books)
-		   		}
-		   		else {
-		   			this.setState({books: []})
-		   		}
-		   	})
+
+		if ( event.target.value === '' ) {
+			this.setState({books: [], noResultsMsg: ''})
+			return
 		}
+
+		BooksAPI.search(event.target.value).then((books) => {
+	   		if ( !books.error ) {
+	   			this.fetchAll(books)
+	   		}
+	   		else {
+	   			this.setState({books: []})
+	   			this.setState({noResultsMsg: 'No results found'})
+	   		}
+	   	})
+
 	}
 
 	changeShelf = (id, shelf) => {
@@ -76,22 +83,22 @@ class Search extends Component {
 			        However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
 			        you don't find a specific author or title. Every search is limited by search terms.
 			      */}
-			      <input type="text" placeholder="Search by title or author" onKeyPress={this.searchTitleAuthor}/>
+			      <input type="text" placeholder="Search by title or author" onChange={this.searchTitleAuthor}/>
 			      
 			    </div>
 			  </div>
 			  <div className="search-books-results">
 			    <ol className="books-grid">
 			    	{this.state.books && (
-			    		this.state.books.map((book) => (
-			    			<li key={book.id}>
+			    		this.state.books.map((book, indx) => (
+			    			<li key={book.id + '_' + indx}>
 			    				<Book data={book} onShelfChange={(id, shelf) => this.changeShelf(id, shelf)} />
 			    			</li>
 			    	    	))
 			    	)}
 
-			    	{!this.state.books && (
-			    		<li>No results found</li>
+			    	{this.state.books.length === 0 && (
+			    		<li>{this.state.noResultsMsg}</li>
 			    	)}
 			    	    	
 			    </ol>
